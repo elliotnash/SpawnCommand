@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SpawnCommand implements CommandExecutor, TabExecutor {
@@ -15,10 +16,13 @@ public class SpawnCommand implements CommandExecutor, TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length==0){
             spawnSelf(sender);
+            return true;
         } else if (args.length==1){
             spawnOther(sender, args[0]);
+            return true;
+        } else {
+            return false;
         }
-        return false;
     }
     void spawnSelf(CommandSender sender){
         if (sender instanceof Player){
@@ -43,9 +47,12 @@ public class SpawnCommand implements CommandExecutor, TabExecutor {
             sender.sendMessage(ChatColor.RED+"You don't have permission to execute this command (spawn.other)");
         }
     }
-
+    List<String> BLANK = new ArrayList<>();
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return null;
+        if (sender.hasPermission("spawn.other")&&args.length==1)
+            return null;
+        else
+            return BLANK;
     }
 }

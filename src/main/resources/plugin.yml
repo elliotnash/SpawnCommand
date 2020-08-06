@@ -5,3 +5,11 @@ api-version: 1.16
 authors: [Elliot Nash]
 description: Adds /spawn command to return to spawn
 website: elliotnash.org
+commands:
+  spawn:
+    description: returns player to spawn
+    usage: /spawn [player]
+permissions:
+  spawn.other:
+    description: Allows sending other players to spawn
+    default: op
